@@ -22,8 +22,8 @@ S3=@(theta) 3*pi + 2.*atan((sqrt((n1^2)*((sin(theta)).^2)-(n2^2)))./(n1.*cos(the
 theta=linspace(0,pi/2,1000);
 figure('Name','Modos TE'), plot(theta,R(theta),theta,S0(theta),theta,S1(theta), ...
     theta,S2(theta),theta,S3(theta),'LineWidth',1.5), grid on
-legend('R','S0','S1','S2','S3','Location','best')
+legend('R','S(m=0)','S(m=1)','S(m=2)','S(m=3)','Location','best')
 title('Modos TE')
 xlabel('theta [rad]') 
-ylabel('R,S')
+ylabel('R(θ),S(θ)')
 
