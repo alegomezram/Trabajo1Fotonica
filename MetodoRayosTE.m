@@ -26,8 +26,8 @@ S3=@(theta) 3*pi + 2.*atan((sqrt((n1^2)*((sin(theta)).^2)-(n2^2)))./(n1.*cos(the
 % title('Modos TE')
 % xlabel('theta [rad]') 
 % ylabel('R(θ),S(θ)')
-
-%Ecuación de dispersión
+% 
+% %Ecuación de dispersión
 % syms theta
 % r=h*k0*n1.*cos(theta);
 % s0=2.*atan((sqrt((n1^2)*((sin(theta)).^2)-(n2^2)))./(n1.*cos(theta)));
@@ -36,9 +36,9 @@ S3=@(theta) 3*pi + 2.*atan((sqrt((n1^2)*((sin(theta)).^2)-(n2^2)))./(n1.*cos(the
 % s3=3*pi + 2.*atan((sqrt((n1^2)*((sin(theta)).^2)-(n2^2)))./(n1.*cos(theta)));
 % 
 % %Método de Newton para hallar las soluciones (intersecciones de las gráficas)
-% f = r-s0;
+% f = r-s1;
 % df = diff(f)
-f=@(theta) h*k0*n1.*cos(theta) - 2.*atan((sqrt((n1^2)*((sin(theta)).^2)-(n2^2)))./(n1.*cos(theta)));
+f=@(theta) h*k0*n1.*cos(theta) - 3*pi -2.*atan((sqrt((n1^2)*((sin(theta)).^2)-(n2^2)))./(n1.*cos(theta)));
 df=@(theta) - 3*pi*sin(theta) - (2*((3*sin(theta))/(2*((9*sin(theta)^2)/4 - 1)^(1/2)) ...
     + (2*sin(theta)*((9*sin(theta)^2)/4 - 1)^(1/2))/(3*cos(theta)^2)))/((4*((9*sin(theta)^2)/4 - 1))/(9*cos(theta)^2) + 1);
 p0= 1;
