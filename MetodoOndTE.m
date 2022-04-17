@@ -13,14 +13,14 @@ k0=2*pi/lambda;  %numero de onda
 
 
 %Ecuación de dispersión
-beta=@(theta) k0*n1*sin(theta);
-gammax=sqrt(beta.^2 -(n2^2)*(k0^2));
-kx=sqrt((n1^2)*(k0^2) -beta.^2);
-R=@(theta) (h/2)*k0.*cos(theta);
-S0=@(theta) atan(gammax./kx);
-S1=@(theta) pi + atan(gammax./kx);
-S2=@(theta) 2*pi + atan(gammax./kx);
-S3=@(theta) 3*pi + atan(gammax./kx);
+% beta=@(theta) k0*n1*sin(theta);
+% gammax=sqrt((k0*n1*sin(theta)).^2 -(n2^2)*(k0^2));
+% kx=sqrt((n1^2)*(k0^2) -(k0*n1*sin(theta)).^2);
+R=@(theta) h*k0*n1.*cos(theta);
+S0=@(theta) 2.*atan((sqrt((k0*n1*sin(theta)).^2 -(n2^2)*(k0^2)))./(sqrt((n1^2)*(k0^2) -(k0*n1*sin(theta)).^2)));
+S1=@(theta) pi + 2.*atan((sqrt((k0*n1*sin(theta)).^2 -(n2^2)*(k0^2)))./(sqrt((n1^2)*(k0^2) -(k0*n1*sin(theta)).^2)));
+S2=@(theta) 2*pi + 2.*atan((sqrt((k0*n1*sin(theta)).^2 -(n2^2)*(k0^2)))./(sqrt((n1^2)*(k0^2) -(k0*n1*sin(theta)).^2)));
+S3=@(theta) 3*pi + 2.*atan((sqrt((k0*n1*sin(theta)).^2 -(n2^2)*(k0^2)))./(sqrt((n1^2)*(k0^2) -(k0*n1*sin(theta)).^2)));
 
 %Plot
 theta=linspace(0,pi/2,1000);
