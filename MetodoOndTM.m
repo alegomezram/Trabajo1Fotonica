@@ -58,10 +58,11 @@ S2=@(theta) 2*pi -atan(((n2^2).*(sqrt((n1^2)*(k0^2) -(k0*n1*sin(theta)).^2)))./(
 % 
 %Plot
 theta=linspace(0,pi/2,1000);
-figure('Name','Modos TE'), plot(theta,R(theta),theta,S0(theta),theta,S1(theta), ...
-    theta,S2(theta),'LineWidth',1.5), grid on
+theta2=linspace(0.7294,pi/2,1000);
+figure('Name','Modos TM'), plot(theta,R(theta),theta2,S0(theta2),theta2,S1(theta2), ...
+    theta2,S2(theta2),'LineWidth',1.5), grid on
 legend('R','S(m=0)','S(m=1)','S(m=2)','S(m=3)','Location','best')
-title('Modos TE impares')
+title('Modos TM impares')
 xlabel('theta [rad]') 
 ylabel('R(θ),S(θ)')
 
@@ -75,7 +76,7 @@ ylabel('R(θ),S(θ)')
 % % Método de Newton para hallar las soluciones (intersecciones de las gráficas)
 % f = r-s0;
 % df = diff(f)
-f=@(theta) (h/2)*k0*n1.*cos(theta) -pi + atan(((n2^2).*(sqrt((n1^2)*(k0^2) -(k0*n1*sin(theta)).^2)))./((n1^2).*(sqrt((k0*n1*sin(theta)).^2 -(n2^2)*(k0^2)))));
+f=@(theta) (h/2)*k0*n1.*cos(theta) -2*pi + atan(((n2^2).*(sqrt((n1^2)*(k0^2) -(k0*n1*sin(theta)).^2)))./((n1^2).*(sqrt((k0*n1*sin(theta)).^2 -(n2^2)*(k0^2)))));
 df=@(theta) ((4*pi^2*cos(theta)*sin(theta))/((9*pi^2*sin(theta)^2 -2778046668940015/70368744177664)^(1/2)*(3125302502557517/35184372088832 - 9*pi^2*sin(theta)^2)^(1/2)) + (4*pi^2*cos(theta)*sin(theta)*(3125302502557517/35184372088832 - 9*pi^2*sin(theta)^2)^(1/2))/(9*pi^2*sin(theta)^2 - 2778046668940015/70368744177664)^(3/2))/((16*(9*pi^2*sin(theta)^2 - 3125302502557517/35184372088832))/(81*(9*pi^2*sin(theta)^2 - 2778046668940015/70368744177664)) - 1) - (3*pi*sin(theta))/2;
 p0= 1;
 delta=1e-6;
