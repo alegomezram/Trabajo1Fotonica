@@ -21,12 +21,11 @@ R=@(theta) (h/2)*k0*n1.*cos(theta);
 S0=@(theta) atan((sqrt((k0*n1*sin(theta)).^2 -(n2^2)*(k0^2)))./(sqrt((n1^2)*(k0^2) -(k0*n1*sin(theta)).^2)));
 S1=@(theta) pi + atan((sqrt((k0*n1*sin(theta)).^2 -(n2^2)*(k0^2)))./(sqrt((n1^2)*(k0^2) -(k0*n1*sin(theta)).^2)));
 S2=@(theta) 2*pi + atan((sqrt((k0*n1*sin(theta)).^2 -(n2^2)*(k0^2)))./(sqrt((n1^2)*(k0^2) -(k0*n1*sin(theta)).^2)));
-S3=@(theta) 3*pi + atan((sqrt((k0*n1*sin(theta)).^2 -(n2^2)*(k0^2)))./(sqrt((n1^2)*(k0^2) -(k0*n1*sin(theta)).^2)));
-% 
+
 %Plot
 theta=linspace(0,pi/2,1000);
 figure('Name','Modos TE'), plot(theta,R(theta),theta,S0(theta),theta,S1(theta), ...
-    theta,S2(theta),theta,S3(theta),'LineWidth',1.5), grid on
+    theta,S2(theta),'LineWidth',1.5), grid on
 legend('R','S(m=0)','S(m=1)','S(m=2)','S(m=3)','Location','best')
 title('Modos TE')
 xlabel('theta [rad]') 
