@@ -1,6 +1,6 @@
 clc, close all, clear all
 
-% Método de rayos
+% Método ondulatorio
 % modos TE
 
 %Parámetros
