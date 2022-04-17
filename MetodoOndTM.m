@@ -14,57 +14,56 @@ k0=2*pi/lambda;  %numero de onda
 %PARES
 
 %Ecuación de dispersión
+
+R=@(theta) (h/2)*k0*n1.*cos(theta);
+S0=@(theta) atan(((n1^2)/(n2^2)).*((sqrt((k0*n1.*sin(theta)).^2 -(n2^2)*(k0^2)))./(sqrt((n1^2)*(k0^2) -(k0*n1.*sin(theta)).^2))));
+S1=@(theta) pi + atan(((n1^2)/(n2^2)).*((sqrt((k0*n1.*sin(theta)).^2 -(n2^2)*(k0^2)))./(sqrt((n1^2)*(k0^2) -(k0*n1.*sin(theta)).^2))));
+S2=@(theta) 2*pi + atan(((n1^2)/(n2^2)).*((sqrt((k0*n1.*sin(theta)).^2 -(n2^2)*(k0^2)))./(sqrt((n1^2)*(k0^2) -(k0*n1.*sin(theta)).^2))));
+
+%Plot
+theta=linspace(0,pi/2,1000);
+figure('Name','Modos TM'), plot(theta,R(theta),theta,S0(theta),theta,S1(theta), ...
+    theta,S2(theta),'LineWidth',1.5), grid on
+legend('R','S(m=0)','S(m=1)','S(m=2)','S(m=3)','Location','best')
+title('Modos TM pares')
+xlabel('theta [rad]') 
+ylabel('R(θ),S(θ)')
+
+% Ecuación de dispersión
+% syms theta
+% r=(h/2)*k0*n1.*cos(theta);
+% s0=atan(((n1^2)/(n2^2)).*((sqrt((k0*n1.*sin(theta)).^2 -(n2^2)*(k0^2)))./(sqrt((n1^2)*(k0^2) -(k0*n1.*sin(theta)).^2))));
+% s1=pi + atan(((n1^2)/(n2^2)).*((sqrt((k0*n1.*sin(theta)).^2 -(n2^2)*(k0^2)))./(sqrt((n1^2)*(k0^2) -(k0*n1.*sin(theta)).^2))));
+% s2=2*pi + atan(((n1^2)/(n2^2)).*((sqrt((k0*n1.*sin(theta)).^2 -(n2^2)*(k0^2)))./(sqrt((n1^2)*(k0^2) -(k0*n1.*sin(theta)).^2))));
 % 
+% % Método de Newton para hallar las soluciones (intersecciones de las gráficas)
+% f = r-s1;
+% df = diff(f)
+f=@(theta) (h/2)*k0*n1.*cos(theta) -atan(((n1^2)/(n2^2)).*((sqrt((k0*n1.*sin(theta)).^2 -(n2^2)*(k0^2)))./(sqrt((n1^2)*(k0^2) -(k0*n1.*sin(theta)).^2))));
+df=@(theta)((81*pi^2*cos(theta)*sin(theta))/(4*(9*pi^2*sin(theta)^2 -2778046668940015/70368744177664)^(1/2)*(3125302502557517/35184372088832 - 9*pi^2*sin(theta)^2)^(1/2)) + (81*pi^2*cos(theta)*sin(theta)*(9*pi^2*sin(theta)^2 - 2778046668940015/70368744177664)^(1/2))/(4*(3125302502557517/35184372088832 - 9*pi^2*sin(theta)^2)^(3/2)))/((81*(9*pi^2*sin(theta)^2 - 2778046668940015/70368744177664))/(16*(9*pi^2*sin(theta)^2 - 3125302502557517/35184372088832)) - 1) - (3*pi*sin(theta))/2;
+p0= 1;
+delta=1e-6;
+epsilon=1e-6;
+max=20;
+[p0, err, k, y] = newton(f, df, p0, delta, epsilon, max) 
+
+%IMPARES
+
+% Ecuación de dispersión
 % R=@(theta) (h/2)*k0*n1.*cos(theta);
-% S0=@(theta) atan(((n2^2)/(n1^2)).*((sqrt((k0*n1.*sin(theta)).^2 -(n2^2)*(k0^2)))./(sqrt((n1^2)*(k0^2) -(k0*n1.*sin(theta)).^2))));
-% S1=@(theta) pi + atan(((n2^2)/(n1^2)).*((sqrt((k0*n1.*sin(theta)).^2 -(n2^2)*(k0^2)))./(sqrt((n1^2)*(k0^2) -(k0*n1.*sin(theta)).^2))));
-% S2=@(theta) 2*pi + atan(((n2^2)/(n1^2)).*((sqrt((k0*n1.*sin(theta)).^2 -(n2^2)*(k0^2)))./(sqrt((n1^2)*(k0^2) -(k0*n1.*sin(theta)).^2))));
+% S0=@(theta) -atan(((n2^2).*(sqrt((n1^2)*(k0^2) -(k0*n1*sin(theta)).^2)))./((n1^2).*(sqrt((k0*n1*sin(theta)).^2 -(n2^2)*(k0^2)))));
+% S1=@(theta) pi -atan(((n2^2).*(sqrt((n1^2)*(k0^2) -(k0*n1*sin(theta)).^2)))./((n1^2).*(sqrt((k0*n1*sin(theta)).^2 -(n2^2)*(k0^2)))));
+% S2=@(theta) 2*pi -atan(((n2^2).*(sqrt((n1^2)*(k0^2) -(k0*n1*sin(theta)).^2)))./((n1^2).*(sqrt((k0*n1*sin(theta)).^2 -(n2^2)*(k0^2)))));
 % 
+% % 
 % %Plot
 % theta=linspace(0,pi/2,1000);
 % figure('Name','Modos TM'), plot(theta,R(theta),theta,S0(theta),theta,S1(theta), ...
 %     theta,S2(theta),'LineWidth',1.5), grid on
 % legend('R','S(m=0)','S(m=1)','S(m=2)','S(m=3)','Location','best')
-% title('Modos TM pares')
+% title('Modos TM impares')
 % xlabel('theta [rad]') 
 % ylabel('R(θ),S(θ)')
-
-% Ecuación de dispersión
-% syms theta
-% r=(h/2)*k0*n1.*cos(theta);
-% s0=atan(((n2^2)/(n1^2)).*((sqrt((k0*n1.*sin(theta)).^2 -(n2^2)*(k0^2)))./(sqrt((n1^2)*(k0^2) -(k0*n1.*sin(theta)).^2))));
-% s1=pi + atan(((n2^2)/(n1^2)).*((sqrt((k0*n1.*sin(theta)).^2 -(n2^2)*(k0^2)))./(sqrt((n1^2)*(k0^2) -(k0*n1.*sin(theta)).^2))));
-% s2=2*pi + atan(((n2^2)/(n1^2)).*((sqrt((k0*n1.*sin(theta)).^2 -(n2^2)*(k0^2)))./(sqrt((n1^2)*(k0^2) -(k0*n1.*sin(theta)).^2))));
-% 
-% % Método de Newton para hallar las soluciones (intersecciones de las gráficas)
-% f = r-s1;
-% df = diff(f)
-% f=@(theta) (h/2)*k0*n1.*cos(theta) -pi -atan(((n2^2)/(n1^2)).*((sqrt((k0*n1.*sin(theta)).^2 -(n2^2)*(k0^2)))./(sqrt((n1^2)*(k0^2) -(k0*n1.*sin(theta)).^2))));
-% df=@(theta)((4*pi^2*cos(theta)*sin(theta))/((9*pi^2*sin(theta)^2 - 2778046668940015/70368744177664)^(1/2)*(3125302502557517/35184372088832 - 9*pi^2*sin(theta)^2)^(1/2)) + (4*pi^2*cos(theta)*sin(theta)*(9*pi^2*sin(theta)^2 - 2778046668940015/70368744177664)^(1/2))/(3125302502557517/35184372088832 - 9*pi^2*sin(theta)^2)^(3/2))/((16*(9*pi^2*sin(theta)^2 - 2778046668940015/70368744177664))/(81*(9*pi^2*sin(theta)^2 - 3125302502557517/35184372088832)) - 1) - (3*pi*sin(theta))/2;
-% p0= 1;
-% delta=1e-6;
-% epsilon=1e-6;
-% max=20;
-% [p0, err, k, y] = newton(f, df, p0, delta, epsilon, max) 
-
-%IMPARES
-
-% Ecuación de dispersión
-R=@(theta) (h/2)*k0*n1.*cos(theta);
-S0=@(theta) -atan(((n2^2).*(sqrt((n1^2)*(k0^2) -(k0*n1*sin(theta)).^2)))./((n1^2).*(sqrt((k0*n1*sin(theta)).^2 -(n2^2)*(k0^2)))));
-S1=@(theta) pi -atan(((n2^2).*(sqrt((n1^2)*(k0^2) -(k0*n1*sin(theta)).^2)))./((n1^2).*(sqrt((k0*n1*sin(theta)).^2 -(n2^2)*(k0^2)))));
-S2=@(theta) 2*pi -atan(((n2^2).*(sqrt((n1^2)*(k0^2) -(k0*n1*sin(theta)).^2)))./((n1^2).*(sqrt((k0*n1*sin(theta)).^2 -(n2^2)*(k0^2)))));
-
-% 
-%Plot
-theta=linspace(0,pi/2,1000);
-theta2=linspace(0.7294,pi/2,1000);
-figure('Name','Modos TM'), plot(theta,R(theta),theta2,S0(theta2),theta2,S1(theta2), ...
-    theta2,S2(theta2),'LineWidth',1.5), grid on
-legend('R','S(m=0)','S(m=1)','S(m=2)','S(m=3)','Location','best')
-title('Modos TM impares')
-xlabel('theta [rad]') 
-ylabel('R(θ),S(θ)')
 
 % Ecuación de dispersión
 % syms theta
@@ -76,12 +75,12 @@ ylabel('R(θ),S(θ)')
 % % Método de Newton para hallar las soluciones (intersecciones de las gráficas)
 % f = r-s0;
 % df = diff(f)
-f=@(theta) (h/2)*k0*n1.*cos(theta) -2*pi + atan(((n2^2).*(sqrt((n1^2)*(k0^2) -(k0*n1*sin(theta)).^2)))./((n1^2).*(sqrt((k0*n1*sin(theta)).^2 -(n2^2)*(k0^2)))));
-df=@(theta) ((4*pi^2*cos(theta)*sin(theta))/((9*pi^2*sin(theta)^2 -2778046668940015/70368744177664)^(1/2)*(3125302502557517/35184372088832 - 9*pi^2*sin(theta)^2)^(1/2)) + (4*pi^2*cos(theta)*sin(theta)*(3125302502557517/35184372088832 - 9*pi^2*sin(theta)^2)^(1/2))/(9*pi^2*sin(theta)^2 - 2778046668940015/70368744177664)^(3/2))/((16*(9*pi^2*sin(theta)^2 - 3125302502557517/35184372088832))/(81*(9*pi^2*sin(theta)^2 - 2778046668940015/70368744177664)) - 1) - (3*pi*sin(theta))/2;
-p0= 1;
-delta=1e-6;
-epsilon=1e-6;
-max=20;
-[p0, err, k, y] = newton(f, df, p0, delta, epsilon, max) 
+% f=@(theta) (h/2)*k0*n1.*cos(theta) -pi + atan(((n2^2).*(sqrt((n1^2)*(k0^2) -(k0*n1*sin(theta)).^2)))./((n1^2).*(sqrt((k0*n1*sin(theta)).^2 -(n2^2)*(k0^2)))));
+% df=@(theta) ((4*pi^2*cos(theta)*sin(theta))/((9*pi^2*sin(theta)^2 -2778046668940015/70368744177664)^(1/2)*(3125302502557517/35184372088832 - 9*pi^2*sin(theta)^2)^(1/2)) + (4*pi^2*cos(theta)*sin(theta)*(3125302502557517/35184372088832 - 9*pi^2*sin(theta)^2)^(1/2))/(9*pi^2*sin(theta)^2 - 2778046668940015/70368744177664)^(3/2))/((16*(9*pi^2*sin(theta)^2 - 3125302502557517/35184372088832))/(81*(9*pi^2*sin(theta)^2 - 2778046668940015/70368744177664)) - 1) - (3*pi*sin(theta))/2;
+% p0= 1;
+% delta=1e-6;
+% epsilon=1e-6;
+% max=20;
+% [p0, err, k, y] = newton(f, df, p0, delta, epsilon, max) 
 
 
